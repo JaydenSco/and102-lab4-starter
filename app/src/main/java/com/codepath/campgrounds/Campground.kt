@@ -10,9 +10,28 @@ import kotlinx.serialization.Serializable
 // TODO: Implement remaining keys of the Campground data class
 @Keep
 @Serializable
+
+
 data class Campground(
     @SerialName("name")
     val name: String?,
+    @SerialName("description")
+    val description: String?,
+    @SerialName("latLong")
+    val latLong: String?,
+    @SerialName("images")
+    val images: List<CampgroundImage>?
+) : java.io.Serializable {
+    // Convenience property to easily get the first image URL if it exists
+    val imageUrl: String
+        get() = images?.firstOrNull { !it.url.isNullOrEmpty() }?.url ?: ""
+}
+
+@Keep
+@Serializable
+data class CampgroundImage(
+    @SerialName("url") val url: String?,
+    @SerialName("title") val title: String?
 ) : java.io.Serializable
 
 
